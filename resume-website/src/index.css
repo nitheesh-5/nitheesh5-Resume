@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent: 37 99 235; /* blue-600 */
+}
+
+.theme-violet {
+  --accent: 139 92 246;
+}
+
+.theme-emerald {
+  --accent: 16 185 129;
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+}
