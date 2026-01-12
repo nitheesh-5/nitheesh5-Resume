@@ -11,13 +11,13 @@ import Education from "./components/Education";
 import ScrollProgress from "./components/ScrollProgress";
 
 function App() {
-  <ScrollProgress />
-
   return (
     <div className="bg-white dark:bg-black text-black dark:text-white transition-colors duration-300">
       <Navbar />
 
       <main className="pt-16">
+        <ScrollProgress />
+        
         <section id="home">
           <Hero />
         </section>
