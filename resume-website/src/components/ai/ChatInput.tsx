@@ -28,9 +28,16 @@ export default function ChatInput({ onSend }: Props) {
           focus:outline-none focus:ring-2 focus:ring-primary/50
         "
       />
+
       <button
         onClick={send}
-        className="rounded-md bg-primary px-4 py-2 text-sm text-white hover:opacity-90"
+        className="
+          rounded-md px-4 py-2 text-sm font-medium
+          bg-black text-white
+          dark:bg-white dark:text-black
+          hover:opacity-90
+          transition
+        "
       >
         Send
       </button>
