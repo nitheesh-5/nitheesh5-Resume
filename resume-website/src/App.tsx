@@ -10,6 +10,9 @@ import Certifications from "./components/Certifications";
 import Education from "./components/Education";
 import ScrollProgress from "./components/ScrollProgress";
 
+// 🔥 AI Assistant
+import AssistantBot from "./components/ai/AssistantBot";
+
 function App() {
   return (
     <div className="bg-white dark:bg-black text-black dark:text-white transition-colors duration-300">
@@ -17,7 +20,7 @@ function App() {
 
       <main className="pt-16">
         <ScrollProgress />
-        
+
         <section id="home">
           <Hero />
         </section>
@@ -27,11 +30,11 @@ function App() {
         </Section>
 
         <Section id="skills">
-        <Skills />
+          <Skills />
         </Section>
 
         <Section id="experience">
-        <Experience />
+          <Experience />
         </Section>
 
         <Section id="projects">
@@ -39,17 +42,20 @@ function App() {
         </Section>
 
         <Section id="education">
-        <Education />
+          <Education />
         </Section>
 
         <Section id="certifications">
-        <Certifications />
+          <Certifications />
         </Section>
 
         <Section id="contact">
           <Contact />
         </Section>
       </main>
+
+      {/* 🤖 Floating AI Assistant */}
+      <AssistantBot />
     </div>
   );
 }
