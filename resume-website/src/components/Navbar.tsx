@@ -37,30 +37,109 @@ function ValentineModal({ onClose }: ValentineModalProps) {
   const [yesSize, setYesSize] = useState<number>(16);
   const [accepted, setAccepted] = useState<boolean>(false);
 
+  const [name, setName] = useState<string>("");
+  const [place, setPlace] = useState<string>("");
+  const [time, setTime] = useState<string>("");
+
   const handleNo = () => {
     setMessageIndex((prev) => prev + 1);
     setYesSize((prev) => prev * 1.3);
   };
 
+  const submitForm = async () => {
+    const payload = {
+      name,
+      place,
+      time,
+      date: "14 Feb 2026",
+    };
+
+    try {
+      await fetch("https://script.google.com/macros/s/AKfycbxsAMkaOFKaz0qSZAZhiEWRi13mk30LvR3e2_g_TWfHr26PWbhRf-oMpl-_33yhiDVXVA/exec", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+
+      alert("Congratulations 💖");
+      onClose();
+    } catch {
+      alert("Failed to save");
+    }
+  };
+
+  /* ===== ACCEPTED SCREEN ===== */
   if (accepted) {
     return (
       <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-        <div className="bg-white dark:bg-gray-900 p-10 rounded-xl text-center shadow-xl">
-          <h2 className="text-2xl font-bold text-pink-500">
+        <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-xl w-[90%] max-w-md">
+          <h2 className="text-2xl font-bold text-pink-500 mb-4 text-center">
             Knew you’d say yes! 💖
           </h2>
 
+          <p className="mb-6 text-center text-gray-600 dark:text-gray-300">
+            Now enter the details 😊
+          </p>
+
+          <div className="flex flex-col gap-4">
+            <div>
+              <label className="text-sm font-medium">Name</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full mt-1 px-3 py-2 border rounded dark:bg-gray-800"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium">Place</label>
+              <input
+                type="text"
+                value={place}
+                onChange={(e) => setPlace(e.target.value)}
+                className="w-full mt-1 px-3 py-2 border rounded dark:bg-gray-800"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium">Time</label>
+              <input
+                type="time"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                className="w-full mt-1 px-3 py-2 border rounded dark:bg-gray-800"
+              />
+            </div>
+
+            <div>
+            <label className="text-sm font-medium">Date</label>
+            <input
+              type="text"
+              value="14 Feb 2026"
+              disabled
+              className="
+                w-full mt-1 px-3 py-2 border rounded
+                bg-gray-100 text-gray-800
+                dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700
+                cursor-not-allowed
+              "
+            />
+          </div>
+
+          </div>
+
           <button
-            className="mt-6 px-4 py-2 bg-accent text-white rounded"
-            onClick={onClose}
+            className="mt-8 w-full px-4 py-2 bg-accent text-white rounded"
+            onClick={submitForm}
           >
-            Close
+            Done
           </button>
         </div>
       </div>
     );
   }
 
+  /* ===== INITIAL SCREEN ===== */
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
       <div className="bg-white dark:bg-gray-900 p-10 rounded-xl text-center shadow-xl">
@@ -123,10 +202,8 @@ export default function Navbar() {
 
   return (
     <>
-      {/* NAVBAR */}
       <nav className="fixed top-0 left-0 w-full z-40 backdrop-blur-md bg-white/70 dark:bg-black/60 border-b border-gray-200 dark:border-gray-800">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          {/* BRAND */}
           <span
             className="font-bold text-lg cursor-pointer"
             onClick={() => setShowValentine(true)}
@@ -134,14 +211,9 @@ export default function Navbar() {
             Nitheesh
           </span>
 
-          {/* DESKTOP */}
           <div className="hidden md:flex items-center gap-6">
             {links.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-sm hover:text-accent transition"
-              >
+              <a key={link.name} href={link.href} className="text-sm hover:text-accent">
                 {link.name}
               </a>
             ))}
@@ -149,7 +221,6 @@ export default function Navbar() {
             <ThemeToggle />
           </div>
 
-          {/* MOBILE */}
           <div className="md:hidden flex items-center gap-3">
             <ThemeToggle />
             <button onClick={() => setOpen(true)}>
@@ -159,59 +230,10 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* MOBILE MENU */}
-      <AnimatePresence>
-        {open && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black z-40"
-              onClick={() => setOpen(false)}
-            />
-
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              className="fixed top-0 right-0 h-full w-3/4 max-w-sm bg-white dark:bg-black z-50 p-6"
-            >
-              <div className="flex justify-between items-center mb-10">
-                <span className="font-bold text-lg">Menu</span>
-                <div className="flex items-center gap-3">
-                  <AccentSwitcher />
-                  <button onClick={() => setOpen(false)}>
-                    <X />
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-6 text-lg">
-                {links.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className={`text-sm transition ${
-                      active === link.href.substring(1)
-                        ? "text-accent font-medium"
-                        : "hover:text-accent"
-                    }`}
-                  >
-                    {link.name}
-                  </a>
-                ))}
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* VALENTINE MODAL */}
       {showValentine && (
         <ValentineModal onClose={() => setShowValentine(false)} />
       )}
     </>
   );
 }
+
