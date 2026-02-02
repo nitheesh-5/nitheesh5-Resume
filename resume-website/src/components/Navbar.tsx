@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { Menu } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import AccentSwitcher from "./AccentSwitcher";
+import { useActiveSection } from "../data/useActiveSection";
 
 /* ================= LINKS ================= */
 
@@ -186,6 +188,17 @@ export default function Navbar() {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  const active = useActiveSection([
+    "home",
+    "about",
+    "skills",
+    "experience",
+    "projects",
+    "education",
+    "certifications",
+    "contact",
+  ]);
 
   return (
     <>
